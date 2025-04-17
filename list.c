@@ -195,7 +195,7 @@ void printListRec(List l){
 }
 
 Item searchListRec(List l, Item e, int *pos){
-	*pos=0;
+	*pos=1;
 	return searchListNode(list->head, e, pos);
 }
 
