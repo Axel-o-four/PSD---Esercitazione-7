@@ -190,30 +190,11 @@ List cloneList(List l)
 	return clone;
 }
 
-void printListRec(List l){
-	 printListNode(l->head);
-}
-
-Item searchListRec(List l, Item e, int *pos){
-	*pos=1;
-	return searchListNode(list->head, e, pos);
-}
-
-int countItemListRec(List l, Item e){
-	return countItemNode(l->head, e);
-}
-
-void destroyListRec(List l){
-	destroyListNode(l->head);
-	list->head=NULL;
-	list->size=0;
-}
-
 void printListNode(struct node *n){
 	if(n==NULL){
 		return;
 	}else{
-		outputItem(n->item);
+		outputItem(n->value);
 		printListNode(n->next);
 	}
 }
@@ -222,8 +203,8 @@ Item searchListNode(struct node *n, Item e, int *pos){
 	if(n==NULL){
 		return NULL;
 	}else{
-		if(cmpItem(n->item, e)==0){
-			return n->item;
+		if(cmpItem(n->value, e)==0){
+			return n->value;
 		}else{
 			(*pos)++;
 			return searchListNode(n->next, e, pos);
@@ -231,11 +212,11 @@ Item searchListNode(struct node *n, Item e, int *pos){
 	}
 }
 
-int countItemNode(struct node *n, item e){
-	if(node==NULL){
+int countItemNode(struct node *n, Item e){
+	if(n==NULL){
 		return 0;
 	}else{
-		if(cmpItem(n->item, e)){
+		if(cmpItem(n->value, e)==0){
 			return (countItemNode(n->next, e)+1);
 		}else{
 			return countItemNode(n->next, e);
@@ -244,9 +225,28 @@ int countItemNode(struct node *n, item e){
 }
 
 void destroyListNode(struct node *n){
-	if(node){
-		destroyListNode(n->next)
+	if(n){
+		destroyListNode(n->next);
 		free(n);
 		return;
 	}
+}
+
+void printListRec(List l){
+	 printListNode(l->head);
+}
+
+Item searchListRec(List l, Item e, int *pos){
+	*pos=1;
+	return searchListNode(l->head, e, pos);
+}
+
+int countItemListRec(List l, Item e){
+	return countItemNode(l->head, e);
+}
+
+void destroyListRec(List l){
+	destroyListNode(l->head);
+	l->head=NULL;
+	l->size=0;
 }

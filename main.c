@@ -1,7 +1,19 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "list.h"
 
 #define M 100
+
+Item inputItemString(char **stream){
+	int *p = malloc(sizeof(int));
+	int ch;
+	if((sscanf(*stream, "%d%n", p, &ch))==1){
+		(*stream)+=ch;
+		return p;
+	}else{
+		return NULL;
+	}
+}
 
 int main(){
   List l;
@@ -9,16 +21,22 @@ int main(){
   FILE *fp;
   fp=fopen("input.txt","r");
   char *line;
-  int elem, ch, n, pos;
+  int pos;
+  Item e, arr[M], n;
 
   for(int i=1; fgets(line, M, fp)!=NULL; i++){
-    while((sscanf(line, "%d%n", &elem, &ch))==1){
-      addListTail(l, &elem);
+    while(1){
+      e=inputItemString(&line);
+      if(e==NULL){
+        break;
+      }else{
+        addListTail(l, e);
+      }
     }
-    printf("\n\nLista %d letta", i);
-    printlistRec(l);
-    printf("\nInserire un valore da ricercare e contare quante volte appare: ");
-    scanf("%d", &n);
+    printf("\n\nLista %d letta ", i);
+    printListRec(l);
+    printf("\nInserire un valore da ricercare e contare le apparizioni: ");
+    n=inputItem();
     if(searchListRec(l, n, &pos)){
       printf("\nValore trovato nella posizione %d.", pos);
       printf("\nValore trovato %d volte.", countItemListRec(l, n));
@@ -26,6 +44,6 @@ int main(){
       printf("\nValore non trovato.");
     }
     destroyListRec(l);
-    printf("\nlista %d distrutta");
+    printf("\nlista %d distrutta.", i);
   }
 }
